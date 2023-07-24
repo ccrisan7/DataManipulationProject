@@ -44,7 +44,7 @@ public class Main {
                 .withColumnRenamed("Sending Country Code", "Codul țării de proveniență")
                 .withColumnRenamed("Receiving Country Code", "Codul țării gazdă");
 
-        df.show(30, false);
+        df.show(25, false);
         df.printSchema();
 
         //partea 2
@@ -64,7 +64,7 @@ public class Main {
                 .withColumnRenamed("count", "Număr de studenți")
                 .orderBy("Codul țării gazdă", "Codul țării de proveniență");
 
-        df.show(30);
+        df.show(25);
 
         //partea 3
 
@@ -82,7 +82,7 @@ public class Main {
                 .read()
                 .jdbc(url, "Statistica", prop);
 
-        df.show(30);
+        df.show(25);
 
         List<String> listaTari2 = new ArrayList<>();
 
