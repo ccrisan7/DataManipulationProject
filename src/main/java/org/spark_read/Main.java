@@ -144,6 +144,7 @@ public class Main {
 
         listaTariGazda2.add("RO");
         listaTariGazda2.add("HU");
+        listaTariGazda2.add("ES");
         listaTariGazda2.add("UK");
 
         for (String codTara : listaTariGazda2) {
