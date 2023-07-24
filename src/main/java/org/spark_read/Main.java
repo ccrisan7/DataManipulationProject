@@ -37,7 +37,6 @@ public class Main {
                 .option("header", "true")
                 .schema(schema)
                 .csv("C://Users//VIVOBOOK//IdeaProjects//Proiect_BigData//src//Erasmus.csv")
-                // Redenumim coloanele pentru a le da denumiri mai sugestive
                 .withColumnRenamed("Project Reference", "Cod proiect")
                 .withColumnRenamed("Mobility Duration", "Durata mobilității")
                 .withColumnRenamed("Participant Age", "Vârsta participantului")
