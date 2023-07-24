@@ -15,7 +15,7 @@ import java.util.Properties;
 public class Main {
     public static void main(String[] args) {
 
-        //partea 1
+        // Partea 1: Inițializăm o sesiune Spark, definim schema pentru setul nostru de date și citim datele din fișierul .csv.
 
         SparkSession spark = SparkSession
                 .builder()
@@ -36,6 +36,7 @@ public class Main {
                 .option("header", "true")
                 .schema(schema)
                 .csv("C://Users//VIVOBOOK//IdeaProjects//Proiect_BigData//src//Erasmus.csv")
+                // Redenumim coloanele pentru a le da denumiri mai sugestive
                 .withColumnRenamed("Project Reference", "Cod proiect")
                 .withColumnRenamed("Mobility Duration", "Durata mobilității")
                 .withColumnRenamed("Participant Age", "Vârsta participantului")
@@ -43,9 +44,13 @@ public class Main {
                 .withColumnRenamed("Receiving Country Code", "Codul țării gazdă");
 
         df1.show(25, false);
+
         df1.printSchema();
 
-        //partea 2
+        // Partea 2: Se filtrează și grupează setul de date conform cerințelor.
+        // Se numără înregistrările pentru fiecare combinație, iar setul de date este sortat după "Codul țării gazdă" și "Codul țării de proveniență".
+        // Pentru fiecare cod de țară din lista data, setul de date se filtrează pentru a include numai înregistrările cu acel cod de țară.
+        // Se creează tabele separate corespunzătoare codurilor țărilor gazdă (FR, DE, AT) în baza de date
 
         List<String> listaTari1 = new ArrayList<>();
 
@@ -63,8 +68,6 @@ public class Main {
                 .orderBy("Codul țării gazdă", "Codul țării de proveniență");
 
         df1.show(25);
-
-        //partea 3
 
         String user = "root";
         String password = "1234";
@@ -92,8 +95,7 @@ public class Main {
         listaTariGazda1.add("DE");
         listaTariGazda1.add("AT");
 
-
-        for(String codTara : listaTariGazda1) {
+        for (String codTara : listaTariGazda1) {
             Dataset<Row> tariDf = df1
                     .filter(df1.col("Codul țării gazdă").equalTo(codTara))
                     .drop("Codul țării gazdă");
@@ -103,53 +105,57 @@ public class Main {
                     .jdbc(url, codTara, prop);
         }
 
-    //partea 4
+        // Partea 3: Se filtrează și grupează setul de date conform cerințelor.
+        // Se numără înregistrările pentru fiecare combinație, iar setul de date este sortat după "Durata mobilității" și "Codul țării gazdă".
+        // Pentru fiecare cod de țară din lista dată, setul de date se filtrează pentru a include numai înregistrările cu acel cod de țară.
+        // Se creează tabele separate corespunzătoare codurilor țărilor gazdă (RO, HU, UK) în baza de date
 
-    Dataset<Row> df2 = spark
-            .read()
-            .option("delimiter", ",")
-            .option("header", "true")
-            .schema(schema)
-            .csv("C://Users//VIVOBOOK//IdeaProjects//Proiect_BigData//src//Erasmus.csv")
-            .withColumnRenamed("Project Reference", "Cod proiect")
-            .withColumnRenamed("Mobility Duration", "Durata mobilității")
-            .withColumnRenamed("Participant Age", "Vârsta participantului")
-            .withColumnRenamed("Sending Country Code", "Codul țării de proveniență")
-            .withColumnRenamed("Receiving Country Code", "Codul țării gazdă");
+        Dataset<Row> df2 = spark
+                .read()
+                .option("delimiter", ",")
+                .option("header", "true")
+                .schema(schema)
+                .csv("C://Users//VIVOBOOK//IdeaProjects//Proiect_BigData//src//Erasmus.csv")
+                .withColumnRenamed("Project Reference", "Cod proiect")
+                .withColumnRenamed("Mobility Duration", "Durata mobilității")
+                .withColumnRenamed("Participant Age", "Vârsta participantului")
+                .withColumnRenamed("Sending Country Code", "Codul țării de proveniență")
+                .withColumnRenamed("Receiving Country Code", "Codul țării gazdă");
 
-    df2 = df2
-            .groupBy("Codul țării gazdă", "Durata mobilității")
-            .count()
+        df2 = df2
+                .groupBy("Codul țării gazdă", "Durata mobilității")
+                .count()
                 .withColumnRenamed("count", "Număr de studenți")
                 .orderBy("Durata mobilității", "Codul țării gazdă");
 
-    df2.show(25);
+        df2.show(25);
 
-    df2
-            .write()
-            .mode(SaveMode.Overwrite).jdbc(url, "Statistica2", prop);
-
-    df2 = spark
-            .read()
-            .jdbc(url, "Statistica2", prop);
-
-    df2.show(25);
-
-    List<String> listaTariGazda2 = new ArrayList<>();
-
-    listaTariGazda2.add("RO");
-    listaTariGazda2.add("HU");
-    listaTariGazda2.add("BL");
-
-
-    for(String codTara : listaTariGazda2) {
-        Dataset<Row> tariDf = df2
-                .filter(df2.col("Codul țării gazdă").equalTo(codTara))
-                .drop("Codul țării gazdă");
-        tariDf
+        df2
                 .write()
-                .mode(SaveMode.Overwrite)
-                .jdbc(url, codTara, prop);
+                .mode(SaveMode.Overwrite).jdbc(url, "Statistica2", prop);
+
+        df2 = spark
+                .read()
+                .jdbc(url, "Statistica2", prop);
+
+        df2.show(25);
+
+        List<String> listaTariGazda2 = new ArrayList<>();
+
+        listaTariGazda2.add("RO");
+        listaTariGazda2.add("HU");
+        listaTariGazda2.add("UK");
+
+        for (String codTara : listaTariGazda2) {
+            Dataset<Row> tariDf = df2
+                    .filter(df2.col("Codul țării gazdă").equalTo(codTara))
+                    .drop("Codul țării gazdă");
+            tariDf
+                    .write()
+                    .mode(SaveMode.Overwrite)
+                    .jdbc(url, codTara, prop);
         }
+
     }
+
 }
