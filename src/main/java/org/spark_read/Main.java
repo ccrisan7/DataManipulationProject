@@ -16,6 +16,7 @@ public class Main {
     public static void main(String[] args) {
 
         // Partea 1: Inițializăm o sesiune Spark, definim schema pentru setul nostru de date și citim datele din fișierul .csv.
+        // Legarea la baza de date MySQL, pregătind o adăugare ulterioară a unor tabele.
 
         SparkSession spark = SparkSession
                 .builder()
@@ -43,6 +44,20 @@ public class Main {
                 .withColumnRenamed("Sending Country Code", "Codul țării de proveniență")
                 .withColumnRenamed("Receiving Country Code", "Codul țării gazdă");
 
+        String user = "root";
+        String password = "1234";
+
+        Properties prop = new Properties();
+
+        prop.setProperty("user", user);
+        prop.setProperty("password", password);
+        String url = "jdbc:mysql://localhost:3306/ibm";
+
+        df1
+                .write()
+                .mode(SaveMode.Overwrite)
+                .jdbc(url, "Statistica_inițială", prop);
+
         df1.show(25, false);
 
         df1.printSchema();
@@ -50,7 +65,7 @@ public class Main {
         // Partea 2: Se filtrează și grupează setul de date conform cerințelor.
         // Se numără înregistrările pentru fiecare combinație, iar setul de date este sortat după "Codul țării gazdă" și "Codul țării de proveniență".
         // Pentru fiecare cod de țară din lista data, setul de date se filtrează pentru a include numai înregistrările cu acel cod de țară.
-        // Se creează tabele separate corespunzătoare codurilor țărilor gazdă (FR, DE, AT) în baza de date
+        // Se creează tabele separate corespunzătoare codurilor țărilor gazdă (FR, DE, AT) în baza de date.
 
         List<String> listaTari1 = new ArrayList<>();
 
@@ -69,23 +84,14 @@ public class Main {
 
         df1.show(25);
 
-        String user = "root";
-        String password = "1234";
-
-        Properties prop = new Properties();
-
-        prop.setProperty("user", user);
-        prop.setProperty("password", password);
-        String url = "jdbc:mysql://localhost:3306/ibm";
-
         df1
                 .write()
                 .mode(SaveMode.Overwrite)
-                .jdbc(url, "Statistica", prop);
+                .jdbc(url, "Statistica_1", prop);
 
         df1 = spark
                 .read()
-                .jdbc(url, "Statistica", prop);
+                .jdbc(url, "Statistica_1", prop);
 
         df1.show(25);
 
@@ -108,7 +114,7 @@ public class Main {
         // Partea 3: Se filtrează și grupează setul de date conform cerințelor.
         // Se numără înregistrările pentru fiecare combinație, iar setul de date este sortat după "Durata mobilității" și "Codul țării gazdă".
         // Pentru fiecare cod de țară din lista dată, setul de date se filtrează pentru a include numai înregistrările cu acel cod de țară.
-        // Se creează tabele separate corespunzătoare codurilor țărilor gazdă (RO, HU, UK) în baza de date
+        // Se creează tabele separate corespunzătoare codurilor țărilor gazdă (RO, HU, UK) în baza de date.
 
         Dataset<Row> df2 = spark
                 .read()
@@ -132,11 +138,12 @@ public class Main {
 
         df2
                 .write()
-                .mode(SaveMode.Overwrite).jdbc(url, "Statistica2", prop);
+                .mode(SaveMode.Overwrite)
+                .jdbc(url, "Statistica_2", prop);
 
         df2 = spark
                 .read()
-                .jdbc(url, "Statistica2", prop);
+                .jdbc(url, "Statistica_2", prop);
 
         df2.show(25);
 
