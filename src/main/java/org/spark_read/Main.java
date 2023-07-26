@@ -38,10 +38,10 @@ public class Main {
                 .schema(schema)
                 .csv("C://Users//VIVOBOOK//IdeaProjects//Proiect_BigData//src//Erasmus.csv")
                 .withColumnRenamed("Project Reference", "Cod proiect")
-                .withColumnRenamed("Mobility Duration", "Durata mobilității")
-                .withColumnRenamed("Participant Age", "Vârsta participantului")
-                .withColumnRenamed("Sending Country Code", "Codul țării de proveniență")
-                .withColumnRenamed("Receiving Country Code", "Codul țării gazdă");
+                .withColumnRenamed("Mobility Duration", "Durata mobilitații")
+                .withColumnRenamed("Participant Age", "Varsta participantului")
+                .withColumnRenamed("Sending Country Code", "Codul tarii de provenienta")
+                .withColumnRenamed("Receiving Country Code", "Codul tarii gazda");
 
         String user = "root";
         String password = "1234";
@@ -55,9 +55,9 @@ public class Main {
         df1
                 .write()
                 .mode(SaveMode.Overwrite)
-                .jdbc(url, "Statistica_inițială", prop);
+                .jdbc(url, "Statistica_inițiala", prop);
 
-        df1.show(25, false);
+        df1.show(25);
 
         df1.printSchema();
 
@@ -73,13 +73,13 @@ public class Main {
         listaTari1.add("AT");
 
         df1 = df1
-                .filter(df1.col("Codul țării gazdă").isin(listaTari1.toArray()));
+                .filter(df1.col("Codul tarii gazda").isin(listaTari1.toArray()));
 
         df1 = df1
-                .groupBy("Codul țării gazdă", "Codul țării de proveniență")
+                .groupBy("Codul tarii gazda", "Codul tarii de provenienta")
                 .count()
-                .withColumnRenamed("count", "Număr de studenți")
-                .orderBy("Codul țării gazdă", "Codul țării de proveniență");
+                .withColumnRenamed("count", "Numar de studenti")
+                .orderBy("Codul tarii gazda", "Codul țării de provenienta");
 
         df1.show(25);
 
@@ -102,8 +102,8 @@ public class Main {
 
         for (String codTara : listaTariGazda1) {
             Dataset<Row> tariDf = df1
-                    .filter(df1.col("Codul țării gazdă").equalTo(codTara))
-                    .drop("Codul țării gazdă");
+                    .filter(df1.col("Codul tarii gazda").equalTo(codTara))
+                    .drop("Codul tarii gazda");
             tariDf
                     .write()
                     .mode(SaveMode.Overwrite)
@@ -122,16 +122,16 @@ public class Main {
                 .schema(schema)
                 .csv("C://Users//VIVOBOOK//IdeaProjects//Proiect_BigData//src//Erasmus.csv")
                 .withColumnRenamed("Project Reference", "Cod proiect")
-                .withColumnRenamed("Mobility Duration", "Durata mobilității")
-                .withColumnRenamed("Participant Age", "Vârsta participantului")
-                .withColumnRenamed("Sending Country Code", "Codul țării de proveniență")
-                .withColumnRenamed("Receiving Country Code", "Codul țării gazdă");
+                .withColumnRenamed("Mobility Duration", "Durata mobilitații")
+                .withColumnRenamed("Participant Age", "Varsta participantului")
+                .withColumnRenamed("Sending Country Code", "Codul tarii de provenienta")
+                .withColumnRenamed("Receiving Country Code", "Codul tarii gazda");
 
         df2 = df2
-                .groupBy("Codul țării gazdă", "Durata mobilității")
+                .groupBy("Codul tarii gazda", "Durata mobilitații")
                 .count()
-                .withColumnRenamed("count", "Număr de studenți")
-                .orderBy("Durata mobilității", "Codul țării gazdă");
+                .withColumnRenamed("count", "Numar de studenti")
+                .orderBy("Durata mobilitații", "Codul tarii gazda");
 
         df2.show(25);
 
@@ -155,8 +155,8 @@ public class Main {
 
         for (String codTara : listaTariGazda2) {
             Dataset<Row> tariDf = df2
-                    .filter(df2.col("Codul țării gazdă").equalTo(codTara))
-                    .drop("Codul țării gazdă");
+                    .filter(df2.col("Codul tarii gazda").equalTo(codTara))
+                    .drop("Codul tarii gazda");
             tariDf
                     .write()
                     .mode(SaveMode.Overwrite)
