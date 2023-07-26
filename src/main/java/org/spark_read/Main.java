@@ -79,7 +79,7 @@ public class Main {
                 .groupBy("Codul tarii gazda", "Codul tarii de provenienta")
                 .count()
                 .withColumnRenamed("count", "Numar de studenti")
-                .orderBy("Codul tarii gazda", "Codul țării de provenienta");
+                .orderBy("Codul tarii gazda", "Codul tarii de provenienta");
 
         df1.show(25);
 
