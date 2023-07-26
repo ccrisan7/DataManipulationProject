@@ -38,7 +38,7 @@ public class Main {
                 .schema(schema)
                 .csv("C://Users//VIVOBOOK//IdeaProjects//Proiect_BigData//src//Erasmus.csv")
                 .withColumnRenamed("Project Reference", "Cod proiect")
-                .withColumnRenamed("Mobility Duration", "Durata mobilitații")
+                .withColumnRenamed("Mobility Duration", "Durata mobilitatii")
                 .withColumnRenamed("Participant Age", "Varsta participantului")
                 .withColumnRenamed("Sending Country Code", "Codul tarii de provenienta")
                 .withColumnRenamed("Receiving Country Code", "Codul tarii gazda");
@@ -122,16 +122,16 @@ public class Main {
                 .schema(schema)
                 .csv("C://Users//VIVOBOOK//IdeaProjects//Proiect_BigData//src//Erasmus.csv")
                 .withColumnRenamed("Project Reference", "Cod proiect")
-                .withColumnRenamed("Mobility Duration", "Durata mobilitații")
+                .withColumnRenamed("Mobility Duration", "Durata mobilitatii")
                 .withColumnRenamed("Participant Age", "Varsta participantului")
                 .withColumnRenamed("Sending Country Code", "Codul tarii de provenienta")
                 .withColumnRenamed("Receiving Country Code", "Codul tarii gazda");
 
         df2 = df2
-                .groupBy("Codul tarii gazda", "Durata mobilitații")
+                .groupBy("Codul tarii gazda", "Durata mobilitatii")
                 .count()
                 .withColumnRenamed("count", "Numar de studenti")
-                .orderBy("Durata mobilitații", "Codul tarii gazda");
+                .orderBy("Durata mobilitatii", "Codul tarii gazda");
 
         df2.show(25);
 
