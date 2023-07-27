@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en-us">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <title>Statistica 1</title>
+
+        <link rel="stylesheet" href="css/production.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,700" rel="stylesheet">
+
+        <link rel="shortcut icon" href="favicon.ico">
+
+        <style>
+            .pdf-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh; 
+            }
+        </style>
+
+    <style>
+        .nice-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            color: #000;
+            background-color: #00FFFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nice-button:hover {
+            background-color: #00FFFF;
+        }
+
+        .nice-button:button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #pdfContainer {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+            }
+
+            #pdfContainer embed {
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+    </style>
+
+    </head>
+
+    <body class="has-animations">
+
+    <div class="page-border">
+    <div class="bg--white">
+
+        <header class="align--center pt3 pb2">
+            <div class="container">
+                <h1 class="mb3 reveal-on-scroll is-revealing" title="Introducere în Big Data" style="text-decoration: underline;">Introducere în Big Data</h1> 
+                <h2 class="mb3 reveal-on-scroll is-revealing" style="font-weight: normal;">Proiect realizat de studentul Cristian CRIȘAN,<br>în programul de practică al firmei IBM.</h2>
+                <p class="mb1">Iulie - August 2023</p>
+                <p>Timișoara, România</p>
+            </div>
+        </header>
+
+        <main>
+                
+        </main>
+
+        <h4 style="font-weight: bold; text-decoration: underline; margin-left: 110px;"><br>Statistica 1</h4>
+        <h4 style="font-weight: normal; margin-left: 110px;">În cadrul Statisticii 1, s-au numărat înregistrările pentru fiecare combinație ("Codul țării gazdă" și "Codul țării de proveniență"). <br>Setul de date a fost ulterior sortat după "Codul țării gazdă" și "Codul țării de proveniență". <br>Mai jos puteți vedea forma finală a tabelei conformă cu toate cenrințele solicitate:
+        <div class="pdf-container"><br>
+            <embed src="C:/Users/VIVOBOOK/OneDrive%20-%20Universitatea%20Politehnica%20Timisoara/Facultate/Practica/AC/IBM_Proiect/Site_web/surse/data/Statistica 1.pdf" width="78%" height="700px" />
+        </div>
+        <br><br>
+
+        <h4 style="font-weight: normal; margin-left: 110px;">Mai jos am prezentat și câteva tabele corespunzătoare câtorva țări: Austria, Franța, Germania și Spania.<br>Acestea au fost afișate în ordinea alfabetică a codurilor țării de proveniență.</h4>
+
+        <section class="align--center pt3 pb3">
+            <button id="btn1" class="nice-button">Austria</button>
+            <button id="btn2" class="nice-button">Franța</button>
+            <button id="btn3" class="nice-button">Germania</button>
+            <button id="btn4" class="nice-button">Spania</button>
+        </section>
+
+        <div id="pdfContainer">
+        </div>
+
+        <script>
+            const pdfContainer = document.getElementById("pdfContainer");
+        
+            function displayPDF(pdfFileName) {
+                const embedTag = `<embed src="C:/Users/VIVOBOOK/OneDrive%20-%20Universitatea%20Politehnica%20Timisoara/Facultate/Practica/AC/IBM_Proiect/Site_web/surse/data/${pdfFileName}" type="application/pdf" width="78%" height="500px" />`;
+                pdfContainer.innerHTML = embedTag;
+            }
+        
+            document.getElementById("btn1").addEventListener("click", function () {
+                displayPDF("Austria.pdf");
+            });
+        
+            document.getElementById("btn2").addEventListener("click", function () {
+                displayPDF("Franta.pdf");
+            });
+        
+            document.getElementById("btn3").addEventListener("click", function () {
+                displayPDF("Germania.pdf");
+            });
+        
+            document.getElementById("btn4").addEventListener("click", function () {
+                displayPDF("Spania.pdf");
+            });
+        </script>
+        <br><br><br>
+
+        <footer class="mt2 pb3 align--center">
+            <ul class="no-bullets list--inline mb0">
+                <li class="m1 block-on-mobile">
+                    <a href="https://www.linkedin.com/in/cristian-crisan/" class="link" target="_blank">
+                      <img class="icon" src="C:/Users/VIVOBOOK/OneDrive%20-%20Universitatea%20Politehnica%20Timisoara/Facultate/Practica/AC/IBM_Proiect/Site_web/surse/img/LinkedIn_logo.png" alt="LinkedIn" style="width: 50px; height: 50px;">
+                    </a>
+                </li>
+                <li class="m1 block-on-mobile">
+                    <a href="https://github.com/ccrisan7/" class="link" target="_blank">
+                      <img class="icon" src="C:/Users/VIVOBOOK/OneDrive%20-%20Universitatea%20Politehnica%20Timisoara/Facultate/Practica/AC/IBM_Proiect/Site_web/surse/img/GitHub_logo.png" alt="GitHub" style="width: 50px; height: 50px;">
+                    </a>
+                </li>
+                <li class="m1 block-on-mobile">
+                    <a href="https://www.facebook.com/cristian.crisan.007/" class="link" target="_blank">
+                      <img class="icon" src="C:/Users/VIVOBOOK/OneDrive%20-%20Universitatea%20Politehnica%20Timisoara/Facultate/Practica/AC/IBM_Proiect/Site_web/surse/img/Facebook_logo.png" alt="Facebook" style="width: 50px; height: 50px;">
+                    </a>
+                </li>  
+                <li class="m1 block-on-mobile">
+                    <a href="https://www.instagram.com/cristian.crisan/" class="link" target="_blank">
+                      <img class="icon" src="C:/Users/VIVOBOOK/OneDrive%20-%20Universitatea%20Politehnica%20Timisoara/Facultate/Practica/AC/IBM_Proiect/Site_web/surse/img/Instagram_logo.png" alt="Instagram" style="width: 50px; height: 50px;">
+                    </a>
+                  </li>                  
+            </ul>
+        </footer>
+
+        <div>
+            <section class="align--center pt3 pb3">
+                <a href="file:///C:/Users/VIVOBOOK/OneDrive%20-%20Universitatea%20Politehnica%20Timisoara/Facultate/Practica/AC/IBM_Proiect/Site_web/surse/Pagina_principala.html" class="btn btn--default reveal-on-scroll is-revealing">Pagina principală</a>
+            </section>
+        </div>
+
+    </div>
+    </div>
+
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+    <script src="js/production.js"></script>
+
+    </body>
+</html>
+
